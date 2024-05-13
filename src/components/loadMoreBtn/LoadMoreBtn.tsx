@@ -1,11 +1,15 @@
-const LoadMoreBtn = ({ HandleClick }) => {
-    return (
-      <div className="container-load-more-btn">
-        <button onClick={HandleClick} type="button" className="load-more-btn">
-          Load more
-        </button>
-      </div>
-    );
-  };
+interface LoadMoreBtnProps {
+  HandleClick: () => void;
+}
 
-  export default LoadMoreBtn;
+const LoadMoreBtn: React.FC<LoadMoreBtnProps> = ({ HandleClick }) => {
+  return (
+    <div className="container-load-more-btn">
+      <button onClick={HandleClick} type="button" className="load-more-btn">
+        Load more
+      </button>
+    </div>
+  );
+};
+
+export default LoadMoreBtn;
