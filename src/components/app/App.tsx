@@ -1,13 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect } from "react";
 import "./App.module.css";
 
-import { fetchImages } from "./api";
-import SearchBar from "./searchBar/SearchBar";
-import Loading from "./loader/Loader";
-import Error from "../components/errorMessage/ErrorMessage";
-import LoadMoreBtn from "../components/loadMoreBtn/LoadMoreBtn";
-import ImageGallery from "./imageGallery/ImageGallery";
-import ImageModal from "../components/imageModal/ImageModal"; 
+import { fetchImages } from "../api";
+import SearchBar from "../searchBar/SearchBar";
+import Loading from "../loader/Loader";
+import Error from "../errorMessage/ErrorMessage";
+import LoadMoreBtn from "../loadMoreBtn/LoadMoreBtn";
+import ImageGallery from "../imageGallery/ImageGallery";
+import ImageModal from "../imageModal/ImageModal";
 
 function App() {
   const [images, setImages] = useState([]);
@@ -22,7 +22,7 @@ function App() {
     if (searchInput !== "") {
       load(searchInput);
     }
-  }, [searchInput]); 
+  }, [searchInput]);
 
   const load = async (searchInput) => {
     try {
