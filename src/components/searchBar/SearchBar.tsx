@@ -1,10 +1,15 @@
+
 import { toast, Toaster } from "react-hot-toast";
 
-const SearchBar = ({ onSearch }) => {
-  const handleSubmit = (event) => {
+interface SearchBarProps {
+  onSearch: (searchInput: string) => void;
+}
+
+const SearchBar: React.FC<SearchBarProps> = ({ onSearch }) => {
+  const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
-    const form = event.target;
-    const searchInput = form.elements.searchInput.value;
+    const form = event.currentTarget;
+    const searchInput = (form.elements.namedItem('searchInput') as HTMLInputElement).value;
 
     if (searchInput.trim() === "") {
       toast.error("The search field cannot be empty!");
