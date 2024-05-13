@@ -1,0 +1,13 @@
+@import url("../components/errorMessage/ErrorMessage.module.css");
+@import url("../components/imageGallery/ImageGallery.module.css");
+@import url("../components/imageModal/ImageModal.module.css");
+@import url("../components/loadMoreBtn/LoadMoreBtn.module.css");
+@import url("../components/searchBar/SearchBar.module.css");
+
+body {
+  background-color: rgb(243, 175, 135);
+}
+
+li {
+  list-style: none;
+}
