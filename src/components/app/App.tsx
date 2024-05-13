@@ -1,6 +1,4 @@
-import { useState, useEffect } from "react";
-import "./App.module.css";
-
+import React, { useState, useEffect } from "react";
 import { fetchImages } from "../api";
 import SearchBar from "../searchBar/SearchBar";
 import Loading from "../loader/Loader";
@@ -9,14 +7,14 @@ import LoadMoreBtn from "../loadMoreBtn/LoadMoreBtn";
 import ImageGallery from "../imageGallery/ImageGallery";
 import ImageModal from "../imageModal/ImageModal";
 
-function App() {
-  const [images, setImages] = useState([]);
+const App: React.FC = () => {
+  const [images, setImages] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
   const [isError, setError] = useState(false);
   const [loadMoreBtn, setLoadMoreBtn] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedImages, setSelectedImages] = useState(null);
+  const [selectedImage, setSelectedImage] = useState<any>(null);
 
   useEffect(() => {
     if (searchInput !== "") {
@@ -24,7 +22,7 @@ function App() {
     }
   }, [searchInput]);
 
-  const load = async (searchInput) => {
+  const load = async (searchInput: string) => {
     try {
       setImages([]);
       setLoading(true);
@@ -51,16 +49,16 @@ function App() {
     }
   };
 
-  const onSearchSuccess = (hasResults) => {
+  const onSearchSuccess = (hasResults: boolean) => {
     setLoadMoreBtn(hasResults);
   };
 
-  const handleSearchSubmit = (searchInput) => {
+  const handleSearchSubmit = (searchInput: string) => {
     setSearchInput(searchInput);
   };
 
-  const handleOpen = async (image) => {
-    setSelectedImages(image);
+  const handleOpen = async (image: any) => {
+    setSelectedImage(image);
     setIsOpen(true);
   };
 
@@ -76,16 +74,16 @@ function App() {
         {isError && <Error />}
         <ImageGallery images={images} openModal={handleOpen} />
         {loadMoreBtn && <LoadMoreBtn HandleClick={handleLoadMore} />}
-        {selectedImages && (
+        {selectedImage && (
           <ImageModal
             isOpen={isOpen}
             onRequestClose={handleClose}
-            image={selectedImages}
+            imageUrl={selectedImage.urls.regular}
           />
         )}
       </div>
     </>
   );
-}
+};
 
 export default App;
