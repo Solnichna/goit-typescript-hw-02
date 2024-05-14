@@ -1,8 +1,8 @@
-@import url("../components/errorMessage/ErrorMessage.module.css");
-@import url("../components/imageGallery/ImageGallery.module.css");
-@import url("../components/imageModal/ImageModal.module.css");
-@import url("../components/loadMoreBtn/LoadMoreBtn.module.css");
-@import url("../components/searchBar/SearchBar.module.css");
+@import url("../errorMessage/ErrorMessage.module.css");
+@import url("../imageGallery/ImageGallery.module.css");
+@import url("../imageModal/ImageModal.module.css");
+@import url("../loadMoreBtn/LoadMoreBtn.module.css");
+@import url("../searchBar/SearchBar.module.css");
 
 body {
   background-color: rgb(243, 175, 135);
