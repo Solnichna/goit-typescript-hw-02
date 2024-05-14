@@ -7,15 +7,22 @@ import LoadMoreBtn from "../loadMoreBtn/LoadMoreBtn";
 import ImageGallery from "../imageGallery/ImageGallery";
 import ImageModal from "../imageModal/ImageModal";
 
+interface Image {
+  urls: {
+    regular: string;
+  };
+}
+
 const App: React.FC = () => {
-  const [images, setImages] = useState<any[]>([]);
-  const [loading, setLoading] = useState(false);
-  const [isError, setError] = useState(false);
-  const [loadMoreBtn, setLoadMoreBtn] = useState(false);
-  const [searchInput, setSearchInput] = useState("");
-  const [isOpen, setIsOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<any>(null);
-  const [currentPage, setCurrentPage] = useState(1); 
+  const [images, setImages] = useState<Image[]>([]);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [isError, setError] = useState<boolean>(false);
+  const [loadMoreBtn, setLoadMoreBtn] = useState<boolean>(false);
+  const [searchInput, setSearchInput] = useState<string>("");
+  const [isOpen, setIsOpen] = useState<boolean>(false);
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1); 
+
   useEffect(() => {
     if (searchInput !== "") {
       load(searchInput);
@@ -29,7 +36,7 @@ const App: React.FC = () => {
       }
       setLoading(true);
       const resData = await fetchImages(searchInput, page);
-      setImages((prevImages) => [...prevImages, ...resData]); 
+      setImages(prevImages => [...prevImages, ...resData]); 
       onSearchSuccess(resData.length > 0);
     } catch (error) {
       setError(true);
@@ -60,7 +67,7 @@ const App: React.FC = () => {
     setCurrentPage(1); 
   };
 
-  const handleOpen = async (image: any) => {
+  const handleOpen = async (image: Image) => {
     setSelectedImage(image);
     setIsOpen(true);
   };
@@ -77,11 +84,11 @@ const App: React.FC = () => {
         {isError && <Error />}
         <ImageGallery images={images} openModal={handleOpen} />
         {loadMoreBtn && <LoadMoreBtn HandleClick={handleLoadMore} />}
-        {selectedImage && (
+        {selectedImage && selectedImage.urls.regular && (
           <ImageModal
             isOpen={isOpen}
             onRequestClose={handleClose}
-            imageUrl={selectedImage.urls.regular}
+            image={selectedImage}
           />
         )}
       </div>
@@ -90,4 +97,3 @@ const App: React.FC = () => {
 };
 
 export default App;
-//upd
