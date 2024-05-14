@@ -15,19 +15,21 @@ const App: React.FC = () => {
   const [searchInput, setSearchInput] = useState("");
   const [isOpen, setIsOpen] = useState(false);
   const [selectedImage, setSelectedImage] = useState<any>(null);
-
+  const [currentPage, setCurrentPage] = useState(1); 
   useEffect(() => {
     if (searchInput !== "") {
       load(searchInput);
     }
   }, [searchInput]);
 
-  const load = async (searchInput: string) => {
+  const load = async (searchInput: string, page = 1) => { 
     try {
-      setImages([]);
+      if (page === 1) {
+        setImages([]); 
+      }
       setLoading(true);
-      const resData = await fetchImages(searchInput);
-      setImages(resData);
+      const resData = await fetchImages(searchInput, page);
+      setImages((prevImages) => [...prevImages, ...resData]); 
       onSearchSuccess(resData.length > 0);
     } catch (error) {
       setError(true);
@@ -39,9 +41,9 @@ const App: React.FC = () => {
   const handleLoadMore = async () => {
     try {
       setLoading(true);
-      const nextPage = Math.ceil(images.length / 10) + 1;
-      const resData = await fetchImages(searchInput, nextPage);
-      setImages([...images, ...resData]);
+      const nextPage = currentPage + 1; 
+      await load(searchInput, nextPage); 
+      setCurrentPage(nextPage); 
     } catch (error) {
       setError(true);
     } finally {
@@ -55,6 +57,7 @@ const App: React.FC = () => {
 
   const handleSearchSubmit = (searchInput: string) => {
     setSearchInput(searchInput);
+    setCurrentPage(1); 
   };
 
   const handleOpen = async (image: any) => {

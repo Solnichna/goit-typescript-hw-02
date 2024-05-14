@@ -15,8 +15,8 @@ const Loading: React.FC = () => (
       width={100}
       ariaLabel="vortex-loading"
       wrapperStyle={{}}
-      wrapperClassName="vortex-wrapper"
-      color={["red", "orange", "yellow", "green", "blue", "purple"]}
+      wrapperClass="vortex-wrapper"
+      colors ={["red", "orange", "yellow", "green", "blue", "purple"]}
     />
   </div>
 );
