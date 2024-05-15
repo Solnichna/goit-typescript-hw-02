@@ -1,31 +1,27 @@
 import React from "react";
 import Modal from "react-modal";
 
-interface Image {
-  urls: {
-    regular: string;
-  };
-  alt_description: string;
-}
+import { Image } from "../imageGallery/ImageGallery.js";
 
 interface ImageModalProps {
   isOpen: boolean;
   onRequestClose: () => void;
-  image: Image | null;
+  image: Image;
 }
 
-const ImageModal: React.FC<ImageModalProps> = ({ isOpen, onRequestClose, image }) => {
+const ImageModal: React.FC<ImageModalProps> = ({
+  isOpen,
+  onRequestClose,
+  image,
+}) => {
   return (
     <>
-      <Modal
-        isOpen={isOpen}
-        onRequestClose={onRequestClose}
-      >
-        {image && (
+      <Modal isOpen={isOpen} onRequestClose={onRequestClose}>
+        {image.urls.regular && (
           <img
             className="image-modal-image"
             src={image.urls.regular}
-            alt={image.alt_description}
+            alt={image.alt}
           />
         )}
       </Modal>

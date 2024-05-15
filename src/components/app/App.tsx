@@ -7,6 +7,7 @@ import LoadMoreBtn from "../loadMoreBtn/LoadMoreBtn";
 import ImageGallery from "../imageGallery/ImageGallery";
 import ImageModal from "../imageModal/ImageModal";
 
+import { Image } from "../imageGallery/ImageGallery.js";
 const App: React.FC = () => {
   const [images, setImages] = useState<any[]>([]);
   const [loading, setLoading] = useState(false);
@@ -14,22 +15,22 @@ const App: React.FC = () => {
   const [loadMoreBtn, setLoadMoreBtn] = useState(false);
   const [searchInput, setSearchInput] = useState("");
   const [isOpen, setIsOpen] = useState(false);
-  const [selectedImage, setSelectedImage] = useState<any>(null);
-  const [currentPage, setCurrentPage] = useState(1); 
+  const [selectedImage, setSelectedImage] = useState<Image | null>(null);
+  const [currentPage, setCurrentPage] = useState(1);
   useEffect(() => {
     if (searchInput !== "") {
       load(searchInput);
     }
   }, [searchInput]);
 
-  const load = async (searchInput: string, page = 1) => { 
+  const load = async (searchInput: string, page = 1) => {
     try {
       if (page === 1) {
-        setImages([]); 
+        setImages([]);
       }
       setLoading(true);
       const resData = await fetchImages(searchInput, page);
-      setImages((prevImages) => [...prevImages, ...resData]); 
+      setImages((prevImages) => [...prevImages, ...resData]);
       onSearchSuccess(resData.length > 0);
     } catch (error) {
       setError(true);
@@ -41,9 +42,9 @@ const App: React.FC = () => {
   const handleLoadMore = async () => {
     try {
       setLoading(true);
-      const nextPage = currentPage + 1; 
-      await load(searchInput, nextPage); 
-      setCurrentPage(nextPage); 
+      const nextPage = currentPage + 1;
+      await load(searchInput, nextPage);
+      setCurrentPage(nextPage);
     } catch (error) {
       setError(true);
     } finally {
@@ -57,10 +58,10 @@ const App: React.FC = () => {
 
   const handleSearchSubmit = (searchInput: string) => {
     setSearchInput(searchInput);
-    setCurrentPage(1); 
+    setCurrentPage(1);
   };
 
-  const handleOpen = async (image: any) => {
+  const handleOpen = async (image: Image) => {
     setSelectedImage(image);
     setIsOpen(true);
   };
@@ -78,17 +79,15 @@ const App: React.FC = () => {
         <ImageGallery images={images} openModal={handleOpen} />
         {loadMoreBtn && <LoadMoreBtn HandleClick={handleLoadMore} />}
         {selectedImage && selectedImage.urls.regular && (
-        <ImageModal
-          isOpen={isOpen}
-          onRequestClose={handleClose}
-          image={selectedImage.urls.regular}
-        />
-      )}
-
+          <ImageModal
+            isOpen={isOpen}
+            onRequestClose={handleClose}
+            image={selectedImage}
+          />
+        )}
       </div>
     </>
   );
 };
 
 export default App;
-//upd
